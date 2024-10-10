@@ -18,15 +18,20 @@ exports.getProducts = (req, res, next) => {
 
 }
 
+
+
+
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;
     Product.findById(prodId, product => {
-        console.log(product);
-        res.render('shop/product-detail', {
-            product: product,
-            pageTitle: product.title,
-            path: '/products'
-        })
+        if (product) {
+            res.render('shop/product-detail', {
+                product: product,
+                pageTitle: product.title,
+                path: '/products'
+            });
+        }
+
     });
 
 }
@@ -42,6 +47,12 @@ exports.getIndex = (req, res, next) => {
             productCSS: true
         });
     });
+}
+
+exports.postCart = (req, res, next) => {
+    const prodId = req.body.productId;
+    console.log(prodId);
+    res.redirect('/cart');
 }
 
 
